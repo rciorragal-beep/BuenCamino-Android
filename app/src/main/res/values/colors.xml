@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bc_primary">#9575CD</color>
+    <color name="bc_primary_dark">#7E57C2</color>
+    <color name="bc_background">#EDE7F6</color>
+</resources>
