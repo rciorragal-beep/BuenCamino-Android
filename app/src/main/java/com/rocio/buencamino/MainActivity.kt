@@ -1,5 +1,6 @@
 package com.rocio.buencamino
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +29,28 @@ class MainActivity : AppCompatActivity() {
 
         val lista = findViewById<ListView>(R.id.listCategorias)
 
+        // Bottom navigation
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        bottomNavigation.selectedItemId = R.id.nav_home
+
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    true
+                }
+                R.id.nav_mapa -> {
+                    startActivity(Intent(this, MapaActivity::class.java))
+                    true
+                }
+                R.id.nav_ayuda -> {
+                    startActivity(Intent(this, AyudaActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
         RetrofitClient.api.getCategorias().enqueue(object : Callback<List<Categoria>> {
 
             override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
@@ -36,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                         "OK: " + (response.body()?.size ?: 0) + " categorias",
                         Toast.LENGTH_LONG
                     ).show()
+
                     val categoriasApi = response.body() ?: emptyList()
                     val nombres = categoriasApi.map { it.nombre }
 
@@ -49,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     lista.setOnItemClickListener { _, _, position, _ ->
                         val categoria = categoriasApi[position]
 
-                        val intent = android.content.Intent(this@MainActivity, RecursosActivity::class.java)
+                        val intent = Intent(this@MainActivity, RecursosActivity::class.java)
                         intent.putExtra("categoria_id", categoria.id)
                         intent.putExtra("categoria_nombre", categoria.nombre)
                         startActivity(intent)

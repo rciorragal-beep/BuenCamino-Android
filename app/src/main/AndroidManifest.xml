@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.BuenCamino">
 
+    <activity android:name=".MapaActivity" />
+    <activity android:name=".AyudaActivity" />
+
         <activity
             android:name=".RecursosActivity"
             android:exported="false" />
