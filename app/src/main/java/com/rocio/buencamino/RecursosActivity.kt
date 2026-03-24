@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class RecursosActivity : AppCompatActivity() {
 
@@ -24,6 +25,28 @@ class RecursosActivity : AppCompatActivity() {
         // Recibimos datos de la pantalla anterior
         val nombreCategoria = intent.getStringExtra("categoria_nombre")
         val categoriaId = intent.getIntExtra("categoria_id", -1)
+
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        bottomNavigation.selectedItemId = R.id.nav_home
+
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    true
+                }
+                R.id.nav_mapa -> {
+                    startActivity(Intent(this, MapaActivity::class.java))
+                    true
+                }
+                R.id.nav_ayuda -> {
+                    startActivity(Intent(this, AyudaActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
         titulo.text = nombreCategoria ?: "Recursos"
 
