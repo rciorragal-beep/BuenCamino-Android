@@ -3,7 +3,6 @@ package com.rocio.buencamino
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -67,14 +66,8 @@ class RecursosActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
 
                         val recursos = response.body() ?: emptyList()
-                        val nombres = recursos.map { it.nombre }
 
-                        val adapter = ArrayAdapter(
-                            this@RecursosActivity,
-                            android.R.layout.simple_list_item_1,
-                            nombres
-                        )
-
+                        val adapter = RecursoAdapter(this@RecursosActivity, recursos)
                         listView.adapter = adapter
 
                         // ✅ Al pulsar un recurso, abrir el enlace en el navegador

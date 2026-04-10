@@ -2,13 +2,9 @@ package com.rocio.buencamino
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.GridView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,16 +14,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        val lista = findViewById<ListView>(R.id.listCategorias)
+        val lista = findViewById<GridView>(R.id.gridViewCategorias)
 
         // Bottom navigation
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -62,17 +52,30 @@ class MainActivity : AppCompatActivity() {
                     ).show()
 
                     val categoriasApi = response.body() ?: emptyList()
-                    val nombres = categoriasApi.map { it.nombre }
 
-                    val adaptador = ArrayAdapter(
-                        this@MainActivity,
-                        android.R.layout.simple_list_item_1,
-                        nombres
-                    )
+                    val categoriasVisuales = categoriasApi.map { categoria ->
+                        CategoriaVisual(
+                            nombre = categoria.nombre,
+                            imagen = when (categoria.nombre.lowercase()) {
+                                "lactancia" -> R.drawable.categoria_lactancia
+                                "matronas" -> R.drawable.categoria_matronas
+                                "libros" -> R.drawable.categoria_libros
+                                "pediatras" -> R.drawable.categoria_pediatras
+                                "fisioterapia" -> R.drawable.categoria_fisioterapia
+                                "calzado respetuoso" -> R.drawable.categoria_calzado
+                                "porteo" -> R.drawable.categoria_porteo
+                                "podcasts" -> R.drawable.categoria_podcasts
+                                else -> R.drawable.categoria_lactancia
+                            },
+                            id = categoria.id
+                        )
+                    }
+
+                    val adaptador = CategoriaAdapter(this@MainActivity, categoriasVisuales)
                     lista.adapter = adaptador
 
                     lista.setOnItemClickListener { _, _, position, _ ->
-                        val categoria = categoriasApi[position]
+                        val categoria = categoriasVisuales[position]
 
                         val intent = Intent(this@MainActivity, RecursosActivity::class.java)
                         intent.putExtra("categoria_id", categoria.id)
