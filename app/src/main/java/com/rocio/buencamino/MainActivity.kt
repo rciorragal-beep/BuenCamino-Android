@@ -16,10 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        val lista = findViewById<GridView>(R.id.gridViewCategorias)
-
-        // Bottom navigation
+        val lista = findViewById<GridView>(R.id.gridCategorias)
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         bottomNavigation.selectedItemId = R.id.nav_home
@@ -29,21 +26,31 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> {
                     true
                 }
+
                 R.id.nav_mapa -> {
-                    startActivity(Intent(this, MapaActivity::class.java))
-                    true
+                    Toast.makeText(
+                        this,
+                        "Primero selecciona una categoría para ver sus ubicaciones",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    false
                 }
+
                 R.id.nav_ayuda -> {
                     startActivity(Intent(this, AyudaActivity::class.java))
                     true
                 }
+
                 else -> false
             }
         }
 
         RetrofitClient.api.getCategorias().enqueue(object : Callback<List<Categoria>> {
 
-            override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
+            override fun onResponse(
+                call: Call<List<Categoria>>,
+                response: Response<List<Categoria>>
+            ) {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@MainActivity,
@@ -84,7 +91,11 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 } else {
-                    Toast.makeText(this@MainActivity, "Error al cargar categorías", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error al cargar categorías",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 

@@ -7,10 +7,12 @@
     android:layout_margin="6dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
     app:cardBackgroundColor="@android:color/white"
-    app:rippleColor="@color/bc_primary">
+    app:rippleColor="@color/bc_primary"
+    app:strokeColor="#E6D6E9"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="fitCenter"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtNombreRecurso"
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Nombre del recurso"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/bc_primary_dark" />
 
@@ -39,10 +41,21 @@
             android:id="@+id/txtDescripcionRecurso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:text="Descripción del recurso"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:maxLines="3" />
+
+        <TextView
+            android:id="@+id/txtAbrirEnlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Tocar para abrir enlace"
             android:textSize="13sp"
-            android:textColor="#666666" />
+            android:textStyle="bold"
+            android:textColor="@color/bc_primary" />
 
     </LinearLayout>
 

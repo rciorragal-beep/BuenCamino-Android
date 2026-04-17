@@ -1,10 +1,14 @@
 package com.rocio.buencamino
 
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 interface ApiService {
 
-    @retrofit2.http.GET("api/categorias")
-    fun getCategorias(): retrofit2.Call<List<Categoria>>
+    @GET("api/categorias")
+    fun getCategorias(): Call<List<Categoria>>
 
-    @retrofit2.http.GET("api/categorias/{id}/recursos")
-    fun getRecursosDeCategoria(@retrofit2.http.Path("id") id: Int): retrofit2.Call<List<Recurso>>
+    @GET("api/categorias/{id}/recursos")
+    fun getRecursosDeCategoria(@Path("id") id: Int): Call<List<Recurso>>
 }

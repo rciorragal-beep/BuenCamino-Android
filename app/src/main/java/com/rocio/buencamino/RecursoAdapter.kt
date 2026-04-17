@@ -32,11 +32,23 @@ class RecursoAdapter(
         val imgRecurso = view.findViewById<ImageView>(R.id.imgRecurso)
         val txtNombre = view.findViewById<TextView>(R.id.txtNombreRecurso)
         val txtDescripcion = view.findViewById<TextView>(R.id.txtDescripcionRecurso)
+        val txtAbrirEnlace = view.findViewById<TextView>(R.id.txtAbrirEnlace)
 
         val recurso = listaRecursos[position]
 
         txtNombre.text = recurso.nombre
-        txtDescripcion.text = recurso.descripcion ?: "Sin descripción"
+
+        txtDescripcion.text = if (recurso.descripcion.isNullOrBlank()) {
+            "Sin descripción disponible"
+        } else {
+            recurso.descripcion
+        }
+
+        txtAbrirEnlace.visibility = if (recurso.enlace.isNullOrBlank()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
 
         val imagenResId = when (recurso.nombre.lowercase()) {
             "embarazo consciente" -> R.drawable.libro_embarazo_consciente
