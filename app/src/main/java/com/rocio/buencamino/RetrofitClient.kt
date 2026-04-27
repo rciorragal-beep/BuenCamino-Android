@@ -2,7 +2,8 @@ package com.rocio.buencamino
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://10.0.2.2:3000/"
+    private const val BASE_URL = "https://pfc-production.up.railway.app"
+        //"http://10.0.2.2:3000/"
 
     val api: ApiService by lazy {
         retrofit2.Retrofit.Builder()
