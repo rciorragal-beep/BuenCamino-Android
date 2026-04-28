@@ -82,17 +82,27 @@ class RecursosActivity : AppCompatActivity() {
 
                         listView.setOnItemClickListener { _, _, position, _ ->
                             val recursoSeleccionado = recursos[position]
-                            val enlace = recursoSeleccionado.enlace
+                            var enlace = recursoSeleccionado.enlace?.trim()
 
-                            if (!enlace.isNullOrEmpty()) {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(enlace))
-                                startActivity(intent)
-                            } else {
+                            Toast.makeText(
+                                this@RecursosActivity,
+                                "Has pulsado: ${recursoSeleccionado.nombre}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            if (enlace.isNullOrBlank()) {
                                 Toast.makeText(
                                     this@RecursosActivity,
                                     "Este recurso no tiene enlace disponible",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                            } else {
+                                if (!enlace.startsWith("http://") && !enlace.startsWith("https://")) {
+                                    enlace = "https://$enlace"
+                                }
+
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(enlace))
+                                startActivity(intent)
                             }
                         }
                     } else {

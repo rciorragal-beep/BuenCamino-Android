@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="32dp"
     android:background="#FFE4EC">
 
     <TextView
@@ -15,6 +16,7 @@
         android:fontFamily="sans-serif-medium"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:layout_marginTop="44dp"
         android:padding="16dp"
         android:textColor="@color/bc_primary_dark"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,8 +33,9 @@
 
     <GridView
         android:id="@+id/gridCategorias"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
