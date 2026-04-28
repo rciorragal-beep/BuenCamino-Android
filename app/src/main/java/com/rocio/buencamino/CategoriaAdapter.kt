@@ -6,11 +6,22 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 
 class CategoriaAdapter(
     private val context: Context,
     private val listaCategorias: List<CategoriaVisual>
 ) : BaseAdapter() {
+
+    private val categoriasEnConstruccion = setOf(
+        "Lactancia",
+        "Calzado respetuoso",
+        "Fisioterapia",
+        "Podcasts",
+        "Porteo",
+        "Pediatras"
+    )
 
     override fun getCount(): Int {
         return listaCategorias.size
@@ -35,6 +46,14 @@ class CategoriaAdapter(
 
         imgCategoria.setImageResource(categoria.imagen)
         txtCategoria.text = categoria.nombre
+
+        if (categoria.nombre in categoriasEnConstruccion) {
+            val matrix = ColorMatrix()
+            matrix.setSaturation(0f)
+            imgCategoria.colorFilter = ColorMatrixColorFilter(matrix)
+        } else {
+            imgCategoria.clearColorFilter()
+        }
 
         return vista
     }

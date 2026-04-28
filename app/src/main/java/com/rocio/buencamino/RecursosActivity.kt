@@ -3,6 +3,8 @@ package com.rocio.buencamino
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +23,7 @@ class RecursosActivity : AppCompatActivity() {
         val titulo = findViewById<TextView>(R.id.tvTitulo)
         val listView = findViewById<ListView>(R.id.listViewRecursos)
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        val btnMapaCategoria = findViewById<ImageButton>(R.id.btnMapaCategoria)
 
         val categoriaId = intent.getIntExtra("categoria_id", -1)
         val categoriaNombre = intent.getStringExtra("categoria_nombre") ?: ""
@@ -32,6 +35,20 @@ class RecursosActivity : AppCompatActivity() {
             return
         }
 
+        // El botón de mapa solo aparece en Matronas
+        if (categoriaId == 2) {
+            btnMapaCategoria.visibility = View.VISIBLE
+        } else {
+            btnMapaCategoria.visibility = View.GONE
+        }
+
+        btnMapaCategoria.setOnClickListener {
+            val intent = Intent(this, MapaActivity::class.java)
+            intent.putExtra("categoria_id", categoriaId)
+            intent.putExtra("categoria_nombre", categoriaNombre)
+            startActivity(intent)
+        }
+
         bottomNavigation.selectedItemId = R.id.nav_home
 
         bottomNavigation.setOnItemSelectedListener { item ->
@@ -41,11 +58,12 @@ class RecursosActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.nav_mapa -> {
-                    val mapaIntent = Intent(this, MapaActivity::class.java)
-                    mapaIntent.putExtra("categoria_id", categoriaId)
-                    mapaIntent.putExtra("categoria_nombre", categoriaNombre)
-                    startActivity(mapaIntent)
+                R.id.nav_buscar -> {
+                    Toast.makeText(
+                        this,
+                        "Buscador en construcción",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     true
                 }
 
@@ -83,12 +101,6 @@ class RecursosActivity : AppCompatActivity() {
                         listView.setOnItemClickListener { _, _, position, _ ->
                             val recursoSeleccionado = recursos[position]
                             var enlace = recursoSeleccionado.enlace?.trim()
-
-                            Toast.makeText(
-                                this@RecursosActivity,
-                                "Has pulsado: ${recursoSeleccionado.nombre}",
-                                Toast.LENGTH_SHORT
-                            ).show()
 
                             if (enlace.isNullOrBlank()) {
                                 Toast.makeText(

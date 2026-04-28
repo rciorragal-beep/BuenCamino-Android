@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.nav_mapa -> {
+                R.id.nav_buscar -> {
                     Toast.makeText(
                         this,
-                        "Primero selecciona una categoría para ver sus ubicaciones",
-                        Toast.LENGTH_LONG
+                        "Buscador en construcción",
+                        Toast.LENGTH_SHORT
                     ).show()
-                    false
+                    true
                 }
 
                 R.id.nav_ayuda -> {
